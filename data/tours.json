@@ -466,5 +466,7 @@
         "day": 5
       }
     ]
-  }
+  },
+  { "id": null, "name": "dummy tour" },
+  { "id": null, "name": "dummy tour" }
 ]
