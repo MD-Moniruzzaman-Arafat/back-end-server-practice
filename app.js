@@ -26,6 +26,23 @@ app.get('/api/v1/tours', (req, res) => {
   })
 })
 
+app.get('/api/v1/tours/:id', (req, res) => {
+  console.log(req.params.id)
+  const tour = tours.find((t) => t._id === req.params.id)
+  if (!tour) {
+    return res.status(404).json({
+      status: 'fail',
+      message: 'Tour not found',
+    })
+  }
+  res.status(200).json({
+    status: 'success',
+    data: {
+      tour,
+    },
+  })
+})
+
 app.post('/api/v1/tours', (req, res) => {
   const newId = tours[tours.length - 1]._id + 1
   const newTour = Object.assign({ id: newId }, req.body)
