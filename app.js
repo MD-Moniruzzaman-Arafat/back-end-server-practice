@@ -1,10 +1,12 @@
 const fs = require('fs')
 const express = require('express')
+const morgan = require('morgan')
 const app = express()
 const PORT = process.env.PORT || 3000
 
-// Middleware to parse JSON bodies
+// 1) Middleware
 app.use(express.json())
+app.use(morgan('dev'))
 app.use((req, res, next) => {
   console.log('Hello from the middleware')
   next()
@@ -14,12 +16,12 @@ app.use((req, res, next) => {
   next()
 })
 
+const tours = JSON.parse(fs.readFileSync(`${__dirname}/data/tours.json`))
 app.get('/', (req, res) => {
   res.status(200).json({ message: 'Hello Server is Running....' })
 })
 
-const tours = JSON.parse(fs.readFileSync(`${__dirname}/data/tours.json`))
-
+// 2) Route Handlers
 const getAllTours = (req, res) => {
   res.status(200).json({
     status: 'success',
@@ -84,10 +86,12 @@ const deleteTour = (req, res) => {
 // app.patch('/api/v1/tours/:id', updateTour)
 // app.delete('/api/v1/tours/:id', deleteTour)
 
+// 3) Routes
 app.route('/api/v1/tours').get(getAllTours).post(createTour)
 
 app.route('/api/v1/tours/:id').get(getTour).patch(updateTour).delete(deleteTour)
 
+// 4) Start Server
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`)
 })
