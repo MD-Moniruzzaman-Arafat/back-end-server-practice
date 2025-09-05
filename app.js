@@ -123,15 +123,18 @@ const deleteUser = (req, res) => {
 
 // 3) Routes
 
+//  route create
 const tourRouter = express.Router()
 const userRouter = express.Router()
 
+// route define
 tourRouter.route('/').get(getAllTours).post(createTour)
 tourRouter.route('/:id').get(getTour).patch(updateTour).delete(deleteTour)
 
 userRouter.route('/').get(getAllUsers).post(createUser)
 userRouter.route('/:id').get(getUser).patch(updateUser).delete(deleteUser)
 
+// route mounting
 app.use('/api/v1/tours', tourRouter)
 app.use('/api/v1/users', userRouter)
 
