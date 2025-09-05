@@ -1,6 +1,17 @@
 const fs = require('fs')
 const tours = JSON.parse(fs.readFileSync(`${__dirname}/../data/tours.json`))
 
+// middleware function
+exports.checkName = (req, res, next) => {
+  if (!req.body.name) {
+    return res.status(400).json({
+      status: 'fail',
+      message: 'Missing name field',
+    })
+  }
+  next()
+}
+
 // Route Handlers
 exports.getAllTours = (req, res) => {
   res.status(200).json({
