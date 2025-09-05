@@ -2,7 +2,6 @@ const fs = require('fs')
 const express = require('express')
 const morgan = require('morgan')
 const app = express()
-const PORT = process.env.PORT || 3000
 const tourRouter = require('./routes/tourRoutes')
 const userRouter = require('./routes/userRoutes')
 
@@ -26,7 +25,4 @@ app.get('/', (req, res) => {
 app.use('/api/v1/tours', tourRouter)
 app.use('/api/v1/users', userRouter)
 
-// 4) Start Server
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`)
-})
+module.exports = app
