@@ -5,6 +5,14 @@ const PORT = process.env.PORT || 3000
 
 // Middleware to parse JSON bodies
 app.use(express.json())
+app.use((req, res, next) => {
+  console.log('Hello from the middleware')
+  next()
+})
+app.use((req, res, next) => {
+  req.requestTime = new Date().toISOString()
+  next()
+})
 
 app.get('/', (req, res) => {
   res.status(200).json({ message: 'Hello Server is Running....' })
@@ -23,7 +31,7 @@ const getAllTours = (req, res) => {
 }
 
 const getTour = (req, res) => {
-  console.log(req.params.id)
+  console.log(req.requestTime)
   const tour = tours.find((t) => t._id === req.params.id)
   if (!tour) {
     return res.status(404).json({
@@ -33,6 +41,7 @@ const getTour = (req, res) => {
   }
   res.status(200).json({
     status: 'success',
+    requestedAt: req.requestTime,
     data: {
       tour,
     },
