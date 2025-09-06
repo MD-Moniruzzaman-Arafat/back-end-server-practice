@@ -19,9 +19,6 @@ const tourSchema = new mongoose.Schema({
     type: String,
     required: [true, 'A tour must have a name'],
     unique: true,
-    trim: true,
-    maxlength: [40, 'A tour name must have less or equal then 40 characters'],
-    minlength: [10, 'A tour name must have more or equal then 10 characters'],
   },
   rating: {
     type: Number,
@@ -34,6 +31,21 @@ const tourSchema = new mongoose.Schema({
 })
 
 const Tour = mongoose.model('Tour', tourSchema)
+
+const testTour = new Tour({
+  name: 'Forest Hiker',
+  rating: 4.7,
+  price: 497,
+})
+
+testTour
+  .save()
+  .then((doc) => {
+    console.log(doc)
+  })
+  .catch((err) => {
+    console.log('Error:', err)
+  })
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`)
