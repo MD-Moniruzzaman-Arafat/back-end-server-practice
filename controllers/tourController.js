@@ -1,19 +1,25 @@
 const Tour = require('../models/tourModel')
 
 // Route Handlers
-exports.getAllTours = (req, res) => {
-  res.status(200).json({
-    status: 'success',
-    results: tours.length,
-    // data: {
-    //   tours,
-    // },
-  })
+exports.getAllTours = async (req, res) => {
+  try {
+    const tours = await Tour.find()
+    res.status(200).json({
+      status: 'success',
+      results: tours.length,
+      data: {
+        tours,
+      },
+    })
+  } catch (err) {
+    res.status(404).json({
+      status: 'fail',
+      message: err.message,
+    })
+  }
 }
 
 exports.getTour = (req, res) => {
-  console.log(req.requestTime)
-  //   const tour = tours.find((t) => t._id === req.params.id)
   if (!tour) {
     return res.status(404).json({
       status: 'fail',
