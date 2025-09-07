@@ -8,10 +8,12 @@ tourRouter.param('id', (req, res, next, val) => {
   next()
 })
 
+tourRouter.route('/tour-stats').get(tourController.getTourStats)
 tourRouter
   .route('/')
   .get(tourController.getAllTours)
   .post(tourController.createTour)
+
 tourRouter
   .route('/:id')
   .get(tourController.getTour)
