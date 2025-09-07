@@ -9,6 +9,8 @@ tourRouter.param('id', (req, res, next, val) => {
 })
 
 tourRouter.route('/tour-stats').get(tourController.getTourStats)
+tourRouter.route('/monthly-plan/:year').get(tourController.getMonthlyPlan)
+
 tourRouter
   .route('/')
   .get(tourController.getAllTours)
